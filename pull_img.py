@@ -7,10 +7,21 @@ import google_streetview.helpers
 key = 'mykey'
 
 def gen_coords(south_west, north_east, intervals):
-    west,south = south_west
-    east,north= north_east
-    lat = [l for l in range(south, north, abs(north - south) / intervals)]
-    lon = [l for l in range(west, east, abs(east - west) / interval)]
+    south,west = south_west
+    north,east = north_east
+    lat = []
+    spacing = (north - south) / intervals
+    for i in range(intervals):
+        lat.append(south + spacing * i)
+    lon = []
+    spacing = (east - west) / intervals
+    for i in range(intervals):
+        lon.append(west + spacing * i)
+    # lat = [l for l in range(south, north, abs(north - south) / intervals)]
+    # lon = [l for l in range(west, east, abs(east - west) / interval)]
+    return {"lat": lat,
+            "lon": lon}
+
     
 def main():
     # Define parameters for street view api
