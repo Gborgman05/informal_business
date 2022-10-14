@@ -2,6 +2,7 @@
 # Import google_streetview for the api module
 import google_streetview.api
 import google_streetview.helpers
+import itertools
 
 # Define parameters for street view api
 key = 'mykey'
@@ -19,19 +20,21 @@ def gen_coords(south_west, north_east, intervals):
         lon.append(west + spacing * i)
     # lat = [l for l in range(south, north, abs(north - south) / intervals)]
     # lon = [l for l in range(west, east, abs(east - west) / interval)]
-    return {"lat": lat,
-            "lon": lon}
+    
+    return [f"{i[0]:.6f},{i[1]:.6f}" for i in itertools.product(lat, lon)]
 
     
 def main():
     # Define parameters for street view api
+    coords = gen_coords((17.335162, 78.366367), (17.450953, 78.459989), 2)
+    # unsure what to do for heading / pitch
     params = [{
     'size': '600x300', # max 640x640 pixels
-    'location': '46.414382,10.013988',
+    'location': coord,
     'heading': '151.78',
     'pitch': '-0.76',
     'key': key
-    }]
+    } for coord in coords]
 
     # Create a results object
     results = google_streetview.api.results(params)
@@ -47,5 +50,5 @@ def main():
     results.save_metadata('metadata.json')
 
 if __name__ == "__main__":
-    # main()
-    print(gen_coords((17.335162, 78.366367), (17.450953, 78.459989), 3))
+    main()
+    # print(gen_coords((17.335162, 78.366367), (17.450953, 78.459989), 3))
