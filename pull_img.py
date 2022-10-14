@@ -1,5 +1,3 @@
-# python3 -m pip install google_streetview
-# Import google_streetview for the api module
 import google_streetview.api
 import google_streetview.helpers
 import itertools
@@ -22,9 +20,8 @@ def gen_coords(south_west, north_east, intervals):
     spacing = (east - west) / intervals
     for i in range(intervals):
         lon.append(west + spacing * i)
-    # lat = [l for l in range(south, north, abs(north - south) / intervals)]
-    # lon = [l for l in range(west, east, abs(east - west) / interval)]
     
+    # formatting coordinates how the api wants it
     return [f"{i[0]:.6f},{i[1]:.6f}" for i in itertools.product(lat, lon)]
 
     
