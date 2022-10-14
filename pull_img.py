@@ -8,6 +8,10 @@ import itertools
 key = 'mykey'
 
 def gen_coords(south_west, north_east, intervals):
+    """
+    generates equally spaced coordinates between a southwest
+    to north east coordinate, generating a total of intervals ** 2 coordinates
+    """
     south,west = south_west
     north,east = north_east
     lat = []
@@ -26,15 +30,17 @@ def gen_coords(south_west, north_east, intervals):
     
 def main():
     # Define parameters for street view api
-    coords = gen_coords((17.335162, 78.366367), (17.450953, 78.459989), 2)
+    coords = gen_coords((17.335162, 78.366367), (17.450953, 78.459989), 10)
     # unsure what to do for heading / pitch
     params = [{
     'size': '600x300', # max 640x640 pixels
     'location': coord,
     'heading': '151.78',
     'pitch': '-0.76',
-    'key': key
+    'key': key,
+    'source': 'outdoor'
     } for coord in coords]
+    
 
     # Create a results object
     results = google_streetview.api.results(params)
