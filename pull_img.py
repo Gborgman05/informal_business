@@ -1,11 +1,10 @@
 import google_streetview.api
-import google_streetview.helpers
 import itertools
 
 # Define parameters for street view api
 key = 'mykey'
 
-def gen_coords(south_west, north_east, intervals):
+def gen_coords(south_west, north_east, x_interval, y_interval):
     """
     generates equally spaced coordinates between a southwest
     to north east coordinate, generating a total of intervals ** 2 coordinates
@@ -13,12 +12,12 @@ def gen_coords(south_west, north_east, intervals):
     south,west = south_west
     north,east = north_east
     lat = []
-    spacing = (north - south) / intervals
-    for i in range(intervals):
+    spacing = (north - south) / y_interval
+    for i in range(y_interval):
         lat.append(south + spacing * i)
     lon = []
-    spacing = (east - west) / intervals
-    for i in range(intervals):
+    spacing = (east - west) / x_interval
+    for i in range(x_interval):
         lon.append(west + spacing * i)
     
     # formatting coordinates how the api wants it
@@ -27,7 +26,8 @@ def gen_coords(south_west, north_east, intervals):
     
 def main():
     # Define parameters for street view api
-    coords = gen_coords((17.335162, 78.366367), (17.450953, 78.459989), 10)
+    
+    coords = gen_coords((17.372985, 78.432067), (17.489595, 78.504851), 10, 100)
     # unsure what to do for heading / pitch
     params = [{
     'size': '600x300', # max 640x640 pixels
@@ -40,17 +40,21 @@ def main():
     
 
     # Create a results object
+    print("making request")
+    print(len(params))
     results = google_streetview.api.results(params)
+    print("done with request")
 
     # Preview results
     # Download images to directory 'downloads'
-    results.download_links('downloads')
+    city = "hyderabad"
+    results.download_links(city)
 
     # Save links
-    results.save_links('links.txt')
+    # results.save_links(f'./{city}/links.txt')
 
     # Save metadata
-    results.save_metadata('metadata.json')
+    results.save_metadata(f'./{city}/metadata.json')
 
 if __name__ == "__main__":
     main()
