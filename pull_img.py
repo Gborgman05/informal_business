@@ -1,5 +1,6 @@
 import google_streetview.api
 import itertools
+import time
 
 # Define parameters for street view api
 key = 'mykey'
@@ -27,34 +28,36 @@ def gen_coords(south_west, north_east, x_interval, y_interval):
 def main():
     # Define parameters for street view api
     
-    coords = gen_coords((17.372985, 78.432067), (17.489595, 78.504851), 10, 100)
+    coords = gen_coords((14.579555, 120.975763), (14.613475, 121.004057), 10, 100)
     # unsure what to do for heading / pitch
     params = [{
     'size': '600x300', # max 640x640 pixels
     'location': coord,
-    'heading': '151.78',
-    'pitch': '-0.76',
+    'heading': '0',
+    'pitch': '0',
     'key': key,
     'source': 'outdoor'
     } for coord in coords]
     
 
     # Create a results object
-    print("making request")
-    print(len(params))
+    print(f"requesting {len(params)} coordinates")
+    start = time.time()
     results = google_streetview.api.results(params)
+    end = time.time()
     print("done with request")
+    print(f"total time taken {end - start} seconds")
 
     # Preview results
     # Download images to directory 'downloads'
-    city = "hyderabad"
-    results.download_links(city)
+    city = "manila"
+    results.download_links(f"./downloads/{city}")
 
     # Save links
     # results.save_links(f'./{city}/links.txt')
 
     # Save metadata
-    results.save_metadata(f'./{city}/metadata.json')
+    results.save_metadata(f'./downloads/{city}/metadata.json')
 
 if __name__ == "__main__":
     main()
