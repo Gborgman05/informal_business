@@ -2,20 +2,25 @@
 
 ## Usage
 
+### Get Images
 - download google_streetview python module via below or similar
 ``` 
 python3 -m pip install google_streetview
 ```
 - generate google cloud platform developer key [here](https://cloud.google.com/docs/authentication/api-keys)
 - adjust coordinates and intervals on line 30
-- run
+- run pull_img.py
 ```
 python3 pull_img.py
 ```
 
-## TODO
+### remove rows from a manifest file
 
-- discuss heading / pitch parameters
-- introduce some element of randomness? 
-- figure out secret protection for api keys 
-- figure out collab notebook or analog for actual data analysis
+- get file path for your current file
+- find a unique identifier for the rows you want to replace
+- find the number of rows you want to remove
+```
+python3 rm_data.py
+```
+
+## TODO
