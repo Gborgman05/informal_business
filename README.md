@@ -1,8 +1,8 @@
 # Informal Business Detection for CSC 480
 
 ## Summary
-
-This is a project using Google Street View Static API to categorize informal businesses for the World Bank. We used Custom labels for Rekognition to create our classification model which is not available here. 
+- Computer Vision solution for AWS DxHub on behalf of the World Bank's effort to identify informal businesses
+- This is a project using Google Street View Static API to categorize informal businesses for the World Bank. We used Custom labels for Rekognition to create our classification model which is not available here. 
 
 ## Usage
 
